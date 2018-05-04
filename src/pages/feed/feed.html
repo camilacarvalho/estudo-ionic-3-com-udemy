@@ -11,42 +11,39 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
-    <h1>{{nome_usuario}}</h1>
-  <ion-card>
+  <ion-card *ngFor="let filme of lista_filmes">
 
     <ion-item>
       <ion-avatar item-start>
         <img src="assets/imgs/marty-avatar.png">
       </ion-avatar>
-      <h2 class="feed_title">Carla Caroline</h2>
-      <p>Abril 22, 2018</p>
+      <h2 class="feed_title">{{filme.original_title}}</h2>
+      <p>{{filme.release_date}}</p>
     </ion-item>
 
     <img src="assets/imgs/advance-card-bttf.png">
 
     <ion-card-content>
-      <p>Estou dormindo muito nesse frio!.</p>
+      <p>{{filme.overview}}</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>2 Likes</div>
+          <div>{{objeto_feed.qnt_likes}} Likes</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>2 Comments</div>
+          <div>{{objeto_feed.qnt_comments}} Comments</div>
         </button>
       </ion-col>
       <ion-col center text-center>
         <ion-note>
-          1h ago
+          {{objeto_feed.time_comment}}
         </ion-note>
       </ion-col>
     </ion-row>
