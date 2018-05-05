@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MovieProvider } from '../../providers/movie/movie';
+import { FilmeDetalhesPage } from '../filme-detalhes/filme-detalhes';
 
 /**
  * Generated class for the FeedPage page.
@@ -18,6 +19,9 @@ import { MovieProvider } from '../../providers/movie/movie';
   ]
 })
 export class FeedPage {
+  public loader;
+  public isRefreshing: boolean = false;
+  public refresher;
   public objeto_feed = {
     titulo:"Carla Caroline",
     data: "Abril 22, 2018",
@@ -32,25 +36,56 @@ public lista_filmes = new Array<any>();
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private movieProvider: MovieProvider
+    private movieProvider: MovieProvider,
+    public loadingCtrl: LoadingController
   ) {
   }
 
-  ionViewDidLoad() {
+  abrirDetalhes(filme){
+    console.log(filme);
+    this.navCtrl.push(FilmeDetalhesPage, {id: filme.id});
+  }
+  
+  abreCarregamento(){
+    this.loader = this.loadingCtrl.create({
+      content: "Carregando filmes...",
+    });
+    this.loader.present();
+  }
+
+  fechaCarregamento(){
+    this.loader.dismiss();
+  }
+  doRefresh(refresher) {
+    this.refresher = refresher; 
+    this.isRefreshing = true;
+    this.carregarFilmes();
+  }
+
+  ionViewDidEnter() { 
+    this.carregarFilmes();
+    }
+
+    carregarFilmes(){
+      this.abreCarregamento();
       this.movieProvider.getLatestMovies().subscribe(
         data=>{
-        // const response = (data as any);
-        // const objeto_retorno = JSON.parse(response._body);
-        //  ;
-
-         // console.log((data as any).id);
          const objeto_retorno = (data as any);
          this.lista_filmes = objeto_retorno.results;
           console.log(this.lista_filmes);
           console.log(data);
+          this.fechaCarregamento();
+          if(this.isRefreshing){
+            this.refresher.complete();
+            this.isRefreshing = false;
+          }
         }, error => {
           console.log(error);
+          this.fechaCarregamento();
+          if(this.isRefreshing){
+            this.refresher.complete();
+          }
         }
-      ) 
+      )
     }
   }

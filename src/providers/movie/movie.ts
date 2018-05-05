@@ -18,4 +18,8 @@ export class MovieProvider {
   getLatestMovies(){
     return this.http.get(this.baseApiPath+"/movie/popular?api_key=80a46d48c071e3088d53f74369c2c164");
   }
+
+  getMoviesDetails(filmeid){
+    return this.http.get(this.baseApiPath+ `/movie/${filmeid}?api_key=`+"80a46d48c071e3088d53f74369c2c164");
+  }
 }

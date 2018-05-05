@@ -14,6 +14,14 @@ import { IntoPageModule } from '../pages/into/into.module';
 import{HttpModule} from "@angular/http"
 import { HttpClientModule } from '@angular/common/http';
 import { MovieProvider } from '../providers/movie/movie';
+import { ConfigProvider } from '../providers/config/config';
+import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
+import { SobrePage } from '../pages/sobre/sobre';
+import { PerfilPage } from '../pages/perfil/perfil';
+import { ConfiguracoesPageModule } from '../pages/configuracoes/configuracoes.module';
+import { SobrePageModule } from '../pages/sobre/sobre.module';
+import { PerfilPageModule } from '../pages/perfil/perfil.module';
+import { FilmeDetalhesPageModule } from '../pages/filme-detalhes/filme-detalhes.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +37,11 @@ import { MovieProvider } from '../providers/movie/movie';
     FeedPageModule,
     IntoPageModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    ConfiguracoesPageModule,
+    SobrePageModule,
+    PerfilPageModule,
+    FilmeDetalhesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +55,8 @@ import { MovieProvider } from '../providers/movie/movie';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MovieProvider
+    MovieProvider,
+    ConfigProvider
   ]
 })
 export class AppModule {}
